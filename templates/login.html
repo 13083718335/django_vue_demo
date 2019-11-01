@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "/element/index.css" %}">
+    <script type="text/javascript" src="{% static "/vue/vue.js" %}"></script>
+    <script type="text/javascript" src="{% static "/element/index.js" %}"></script>
+    <script type="text/javascript" src="{% static "/jquery/jquery.min.js" %}"></script>
+    <style>
+        .el-row {
+            margin-bottom: 20px;
+        }
+
+        .login-box {
+            margin-top: 20%;
+            margin-left: 40%;
+        }
+    </style>
+</head>
+<body>
+<div class="login-box" id="app">
+    <el-row>
+        <el-col :span="8">
+            <el-input id="name" v-model="username" placeholder="请输入帐号">
+                <template slot="prepend">帐号</template>
+            </el-input>
+        </el-col>
+    </el-row>
+    <el-row>
+        <el-col :span="8">
+            <el-input id="password" v-model="password" type="password" placeholder="请输入密码">
+                <template slot="prepend">密码</template>
+            </el-input>
+        </el-col>
+    </el-row>
+    <el-row>
+        <el-col :span="8">
+            <el-button id="login" v-on:click="check" style="width:100%" type="primary">登录</el-button>
+        </el-col>
+    </el-row>
+</div>
+</body>
+
+<script type="text/javascript">
+    new Vue({
+        el: '#app',
+        data: {
+            username: '',
+            password: ''
+        },
+        methods: {
+            check: function (event) {
+                let username = this.username;
+                let password = this.password;
+                if (username === '' || password === '') {
+                    this.$message({
+                        message: '账号或密码为空！',
+                        type: 'error'
+                    });
+                    return;
+                }
+                let that = this;
+                $.ajax({
+                    url: '/login/',
+                    type: 'post',
+                    data: {
+                        username: username,
+                        password: password
+                    },
+                    success: function (data) {
+                        if (data.code === 0) {
+                            self.location = '/'
+                        } else {
+                            that.$message({
+                                message: '账号或密码为空！',
+                                type: 'error'
+                            });
+                        }
+                    },
+                    error: function (data) {
+                        alert(data);
+                    },
+                    dataType: 'json',
+                })
+            }
+        }
+    })
+
+</script>
+</html>
