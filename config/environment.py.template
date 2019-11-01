@@ -1,0 +1,12 @@
+# Author    : yofo
+# Datetime  : 2019/10/31 7:15 下午
+# File      : environment.py
+# IDE       : PyCharm
+
+DB_SETTINGS = {
+    'host': '127.0.0.1',
+    'port': 3306,
+    'name': '',
+    'user': '',
+    'password': '',
+}

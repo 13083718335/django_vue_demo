@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 
 import os
 
+from config import environment
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -75,10 +77,22 @@ WSGI_APPLICATION = 'django_vue_demo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
+# 默认sqlite
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': environment.DB_SETTINGS['name'],
+        'USER': environment.DB_SETTINGS['user'],
+        'PASSWORD': environment.DB_SETTINGS['password'],
+        'HOST': environment.DB_SETTINGS['host'],
+        'PORT': environment.DB_SETTINGS['port']
     }
 }
 
