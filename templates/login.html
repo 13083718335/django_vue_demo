@@ -80,7 +80,10 @@
                         }
                     },
                     error: function (data) {
-                        alert(data);
+                        that.$message({
+                            message: data,
+                            type: 'error'
+                        });
                     },
                     dataType: 'json',
                 })

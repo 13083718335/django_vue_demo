@@ -1,7 +1,10 @@
+from django.contrib import auth
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.http import JsonResponse
-from django.contrib import auth
+
+from util.resp import resp_ok
+from util.resp import resp_err
+from util.resp import CODE_AUTHENTICATION_FAILED
 
 # Create your views here.
 
@@ -20,9 +23,9 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user:
             auth.login(request, user)
-            return JsonResponse({"code": 0, "msg": "success"})
+            return resp_ok()
         else:
-            return JsonResponse({"code": 1, "msg": "failed"})
+            return resp_err(CODE_AUTHENTICATION_FAILED)
     if request.user.is_authenticated:
         return HttpResponseRedirect('/')
     else:
